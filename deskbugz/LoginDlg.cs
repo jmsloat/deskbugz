@@ -21,7 +21,11 @@ namespace deskbugz
 
         private void connectButton_Click(object sender, EventArgs e)
         {
-            string url = this.siteEditText.Text;
+            StringBuilder urlStringBuilder = new StringBuilder();
+            urlStringBuilder.Append(this.httpSiteLabel.Text);
+            urlStringBuilder.Append(this.siteEditText.Text);
+            urlStringBuilder.Append(this.fogbugzcomLabel.Text);
+            string url = urlStringBuilder.ToString();
             string email = this.emailEditText.Text;
             string password = this.passwordEditText.Text;
             if (api.connect(url, email, password))

@@ -35,6 +35,8 @@
             this.emailLabel = new System.Windows.Forms.Label();
             this.passwordEditText = new System.Windows.Forms.TextBox();
             this.passwordLabel = new System.Windows.Forms.Label();
+            this.fogbugzcomLabel = new System.Windows.Forms.Label();
+            this.httpSiteLabel = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // connectButton
@@ -49,11 +51,10 @@
             // 
             // siteEditText
             // 
-            this.siteEditText.Location = new System.Drawing.Point(143, 42);
+            this.siteEditText.Location = new System.Drawing.Point(184, 42);
             this.siteEditText.Name = "siteEditText";
-            this.siteEditText.Size = new System.Drawing.Size(253, 20);
+            this.siteEditText.Size = new System.Drawing.Size(181, 20);
             this.siteEditText.TabIndex = 1;
-            this.siteEditText.Text = "http://";
             // 
             // siteLabel
             // 
@@ -97,12 +98,32 @@
             this.passwordLabel.TabIndex = 6;
             this.passwordLabel.Text = "Password";
             // 
+            // fogbugzcomLabel
+            // 
+            this.fogbugzcomLabel.AutoSize = true;
+            this.fogbugzcomLabel.Location = new System.Drawing.Point(371, 45);
+            this.fogbugzcomLabel.Name = "fogbugzcomLabel";
+            this.fogbugzcomLabel.Size = new System.Drawing.Size(71, 13);
+            this.fogbugzcomLabel.TabIndex = 7;
+            this.fogbugzcomLabel.Text = ".fogbugz.com";
+            // 
+            // httpSiteLabel
+            // 
+            this.httpSiteLabel.AutoSize = true;
+            this.httpSiteLabel.Location = new System.Drawing.Point(140, 45);
+            this.httpSiteLabel.Name = "httpSiteLabel";
+            this.httpSiteLabel.Size = new System.Drawing.Size(38, 13);
+            this.httpSiteLabel.TabIndex = 8;
+            this.httpSiteLabel.Text = "http://";
+            // 
             // LoginDlg
             // 
             this.AcceptButton = this.connectButton;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(546, 238);
+            this.Controls.Add(this.httpSiteLabel);
+            this.Controls.Add(this.fogbugzcomLabel);
             this.Controls.Add(this.passwordLabel);
             this.Controls.Add(this.passwordEditText);
             this.Controls.Add(this.emailLabel);
@@ -126,5 +147,7 @@
         private System.Windows.Forms.Label emailLabel;
         private System.Windows.Forms.TextBox passwordEditText;
         private System.Windows.Forms.Label passwordLabel;
+        private System.Windows.Forms.Label fogbugzcomLabel;
+        private System.Windows.Forms.Label httpSiteLabel;
     }
 }
