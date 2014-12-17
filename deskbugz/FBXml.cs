@@ -18,7 +18,8 @@ namespace deskbugz
         List<Filter> currentFilters;
         public FBXml()
         {
-            //FBNet net = new FBNet();
+            token = Properties.Settings.Default.token;
+            fbUrl = Properties.Settings.Default.site;
         }
 
         public delegate bool XMLResponse(XmlDocument response);
@@ -75,6 +76,10 @@ namespace deskbugz
             {
                 token = tokenNode.Value;
             }
+
+            Properties.Settings.Default.token = token;
+            Properties.Settings.Default.site = fbUrl;
+            Properties.Settings.Default.Save();
 
             return true;
         }

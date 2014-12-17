@@ -17,44 +17,28 @@ namespace deskbugz
         public deskBugzMainWindow()
         {
             InitializeComponent();
-            this.testConnectToolStripMenuItem.Click += new EventHandler(testConnectToolStripMenuItem_Click);
-            LoginDlg loginDlg = new LoginDlg(xmlApi);
 
-            bool run = true;
-            while(run)
+            //check application settings for token - so we don't have to login again
+            string token = Properties.Settings.Default.token;
+            string site = Properties.Settings.Default.site;
+
+            if (token == "")
             {
-                DialogResult res = loginDlg.ShowDialog();
-                if (res == DialogResult.OK)
-                    run = false;
-                else if (res == DialogResult.Cancel)
-                    run = false;
+                LoginDlg loginDlg = new LoginDlg(xmlApi);
+
+                bool run = true;
+                while (run)
+                {
+                    DialogResult res = loginDlg.ShowDialog();
+                    if (res == DialogResult.OK)
+                        run = false;
+                    else if (res == DialogResult.Cancel)
+                        run = false;
+                }
+                //else
+
+                loginDlg.Dispose();
             }
-            //else
-            
-            loginDlg.Dispose();
-        }
-
-        public void testConnect()
-        {
-            string url = "https://sloatapitest.fogbugz.com";
-            string username = "sloatthrowaway@gmail.com";
-            string pass = "samson27";
-
-            if(xmlApi.connect(url, username, pass))
-            {
-                System.Console.WriteLine("Connect Successful");
-            }
-            else
-                System.Console.WriteLine("Connect Failed...");
-            
-            //xmlApi.connect();
-        }
-
-        private void testConnectToolStripMenuItem_Click(object sender, System.EventArgs e)
-        {
-            System.Console.WriteLine("Clicked!");
-            this.testConnect();
-            xmlApi.getFilters();
         }
     }
 }

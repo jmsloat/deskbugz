@@ -44,6 +44,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BugTreeController.cs" />
     <Compile Include="FBNet.cs" />
     <Compile Include="FBXml.cs" />
     <Compile Include="Form1.cs">
