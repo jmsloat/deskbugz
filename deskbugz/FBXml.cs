@@ -39,7 +39,10 @@ namespace deskbugz
             Properties.Settings.Default.Save();
             IXMLResponseHandler handler = XmlResponseHandlerFactory.Create(ApiActions.LOGON);
 
-            bool success = this.net.buildRequest(realurl, args, handler);
+            bool success = false;
+            XmlResponsePacket response = net.buildRequest(realurl, args, handler);
+            if (response.ErrorCode == "-1")
+                success = true;
 
             return success;
         }
@@ -55,39 +58,6 @@ namespace deskbugz
             return this.currentFilters;
         }
 
-        /*private bool LogonResponseHandler(XmlDocument doc)
-        {
-            //API will return a token if successful,  an error code if unsuccessful.
-            XmlNodeList errNode = doc.GetElementsByTagName("error");
-            System.Console.WriteLine(doc.ToString());
-            if (errNode.Count > 0)
-            {
-                //FIXME: Different error codes will require different handling ( multiple users, incorrect password, etc. )
-                //Should look for these at some point in the future. 
-                errCode = errNode[0].Name;
-                errDesc = errNode[0].Value;
-
-                return false;
-            }
-
-            XmlNode tokenNode = doc.SelectSingleNode("//token");
-//            XmlNode tokenNode = tokenNodes[0];
-            if (tokenNode.NodeType != XmlNodeType.CDATA)
-            {
-                XmlNode childNode = tokenNode.FirstChild;
-                token = childNode.Value;
-            }
-            else
-            {
-                token = tokenNode.Value;
-            }
-
-            Properties.Settings.Default.token = token;
-            Properties.Settings.Default.site = fbUrl;
-            Properties.Settings.Default.Save();
-
-            return true;
-        }*/
 
         private bool ListFiltersResponseHandler(XmlDocument doc)
         {

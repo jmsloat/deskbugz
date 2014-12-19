@@ -13,7 +13,7 @@ namespace deskbugz
 {
     public class FBNet
     {
-        public bool buildRequest(string url, Dictionary<string, string> args, IXMLResponseHandler handler)
+        public XmlResponsePacket buildRequest(string url, Dictionary<string, string> args, IXMLResponseHandler handler)
         {
             StringBuilder urlBuilder = new StringBuilder(url);
             foreach(string key in args.Keys)
@@ -31,7 +31,7 @@ namespace deskbugz
             {
                 //URL isn't valid. Notify The user. 
                 MessageBox.Show(String.Format("URL {0} is invalid",url), "URL Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return false;
+                return null;
             }
 
             WebResponse resp = null;
@@ -42,14 +42,14 @@ namespace deskbugz
                 {  
                     XmlDocument doc = new XmlDocument();
                     doc.Load(reader);
-                    Dictionary<string, string> retDict = handler.handle(doc);
-                    return true;
+                    XmlResponsePacket packet = handler.handle(doc);
+                    return packet;
                 }
             }
             catch(IOException e)
             {
                 System.Console.WriteLine(e.ToString());
-                return false;
+                return new XmlResponsePacket(); //FIXME: Return with exception error codes?
             }
 
         }
