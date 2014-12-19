@@ -34,7 +34,12 @@ namespace deskbugz
             args["email"] = user;
             args["password"] = pass;
 
-            bool success = this.net.buildRequest(realurl, args, new XMLResponse(LogonResponseHandler));
+            //store the fogbugz url into application settings (to prevent requiring constant logins)
+            Properties.Settings.Default.site = fbUrl;
+            Properties.Settings.Default.Save();
+            IXMLResponseHandler handler = XmlResponseHandlerFactory.Create(ApiActions.LOGON);
+
+            bool success = this.net.buildRequest(realurl, args, handler);
 
             return success;
         }
@@ -45,12 +50,12 @@ namespace deskbugz
             args["cmd"] = "listFilters";
             args["token"] = token;
 
-            bool success = this.net.buildRequest(fbUrl, args, new XMLResponse(ListFiltersResponseHandler));
+            //bool success = this.net.buildRequest(fbUrl, args, new XMLResponse(ListFiltersResponseHandler));
 
             return this.currentFilters;
         }
 
-        private bool LogonResponseHandler(XmlDocument doc)
+        /*private bool LogonResponseHandler(XmlDocument doc)
         {
             //API will return a token if successful,  an error code if unsuccessful.
             XmlNodeList errNode = doc.GetElementsByTagName("error");
@@ -82,7 +87,7 @@ namespace deskbugz
             Properties.Settings.Default.Save();
 
             return true;
-        }
+        }*/
 
         private bool ListFiltersResponseHandler(XmlDocument doc)
         {

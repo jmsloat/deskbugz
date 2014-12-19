@@ -13,7 +13,7 @@ namespace deskbugz
 {
     public class FBNet
     {
-        public bool buildRequest(string url, Dictionary<string, string> args, FBXml.XMLResponse ResponseHandler)
+        public bool buildRequest(string url, Dictionary<string, string> args, IXMLResponseHandler handler)
         {
             StringBuilder urlBuilder = new StringBuilder(url);
             foreach(string key in args.Keys)
@@ -42,7 +42,8 @@ namespace deskbugz
                 {  
                     XmlDocument doc = new XmlDocument();
                     doc.Load(reader);
-                    return ResponseHandler(doc);
+                    Dictionary<string, string> retDict = handler.handle(doc);
+                    return true;
                 }
             }
             catch(IOException e)

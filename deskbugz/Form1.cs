@@ -22,7 +22,7 @@ namespace deskbugz
             string token = Properties.Settings.Default.token;
             string site = Properties.Settings.Default.site;
 
-            if (token == "")
+            if (token == "") // we don't have a token saved in application window - launch the login dialog
             {
                 LoginDlg loginDlg = new LoginDlg(xmlApi);
 
