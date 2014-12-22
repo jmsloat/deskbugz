@@ -60,7 +60,7 @@ namespace deskbugz
 
                 //return false;
             }
-
+            
             XmlNode tokenNode = doc.SelectSingleNode("//token");
             //            XmlNode tokenNode = tokenNodes[0];
             if (tokenNode.NodeType != XmlNodeType.CDATA)

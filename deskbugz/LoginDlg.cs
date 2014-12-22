@@ -13,6 +13,7 @@ namespace deskbugz
     public partial class LoginDlg : Form
     {
         private FBXml api;
+        private bool connectionSuccess = false;
         public LoginDlg(FBXml xmlApi)
         {
             this.api = xmlApi;
@@ -21,6 +22,11 @@ namespace deskbugz
 
         private void connectButton_Click(object sender, EventArgs e)
         {
+            logonBackgroundWorker.RunWorkerAsync();
+        }
+
+        private void logonBackgroundWorker_DoWork(object sender, DoWorkEventArgs e)
+        {
             StringBuilder urlStringBuilder = new StringBuilder();
             urlStringBuilder.Append(this.httpSiteLabel.Text);
             urlStringBuilder.Append(this.siteEditText.Text);
@@ -28,11 +34,15 @@ namespace deskbugz
             string url = urlStringBuilder.ToString();
             string email = this.emailEditText.Text;
             string password = this.passwordEditText.Text;
-            if (api.connect(url, email, password))
-            {
+            connectionSuccess = api.connect(url, email, password);
+            
+        }
+
+        private void logonBackgroundWorker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        {
+            System.Console.WriteLine("Logon worker completed running");
+            if(connectionSuccess)
                 this.DialogResult = DialogResult.OK;
-            }
-                
             else
                 this.DialogResult = DialogResult.Abort; // which one is proper?
         }

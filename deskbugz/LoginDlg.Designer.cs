@@ -37,6 +37,7 @@
             this.passwordLabel = new System.Windows.Forms.Label();
             this.fogbugzcomLabel = new System.Windows.Forms.Label();
             this.httpSiteLabel = new System.Windows.Forms.Label();
+            this.logonBackgroundWorker = new System.ComponentModel.BackgroundWorker();
             this.SuspendLayout();
             // 
             // connectButton
@@ -116,6 +117,13 @@
             this.httpSiteLabel.TabIndex = 8;
             this.httpSiteLabel.Text = "http://";
             // 
+            // logonBackgroundWorker
+            // 
+            this.logonBackgroundWorker.WorkerReportsProgress = true;
+            this.logonBackgroundWorker.WorkerSupportsCancellation = true;
+            this.logonBackgroundWorker.DoWork += new System.ComponentModel.DoWorkEventHandler(this.logonBackgroundWorker_DoWork);
+            this.logonBackgroundWorker.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.logonBackgroundWorker_RunWorkerCompleted);
+            // 
             // LoginDlg
             // 
             this.AcceptButton = this.connectButton;
@@ -149,5 +157,6 @@
         private System.Windows.Forms.Label passwordLabel;
         private System.Windows.Forms.Label fogbugzcomLabel;
         private System.Windows.Forms.Label httpSiteLabel;
+        private System.ComponentModel.BackgroundWorker logonBackgroundWorker;
     }
 }
