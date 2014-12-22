@@ -11,21 +11,18 @@ namespace deskbugz
         public static IXMLResponseHandler Create(ApiActions action)
         {
             IXMLResponseHandler responseHandler = null;
-            try
+            
+            if(action == ApiActions.LOGON)
             {
-                if(action == ApiActions.LOGON)
-                {
-                    responseHandler = new LogonResponseHandler();
-                }
+                responseHandler = new LogonResponseHandler();
+            }
+            else if(action == ApiActions.LIST_FILTERS)
+            {
+                responseHandler = new ListFiltersXMLResponseHandler();
+            }
 
 
-                return responseHandler;
-            }
-            catch(ArgumentException)
-            {
-                Console.Error.WriteLine("Invalid action supplied to XMLResponseHandlerFactory");
-                return null;
-            }
+            return responseHandler;
         }
     }
 }

@@ -34,11 +34,22 @@ namespace deskbugz
                         run = false;
                     else if (res == DialogResult.Cancel)
                         run = false;
-                }
-                //else
 
-                loginDlg.Dispose();
+                    loginDlg.Dispose();
+                }
+                //else       
             }
+        }
+
+        private void loadFilters()
+        {
+            //initialize the list of filters. Query FB, then list them.
+            List<Filter> filters = xmlApi.getFilters();
+        }
+
+        void onFiltersUpdated(object sender, EventArgs e)
+        {
+
         }
     }
 }

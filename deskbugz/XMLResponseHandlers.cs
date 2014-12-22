@@ -15,6 +15,7 @@ namespace deskbugz
     //base class for API response packets - should never be used alone
     public class XmlResponsePacket
     {
+
         string _errorDescription;
         string _errorCode = "-1";
 
@@ -75,6 +76,47 @@ namespace deskbugz
 
             Properties.Settings.Default.token = token;
             Properties.Settings.Default.Save();
+
+            return packet;
+        }
+    }
+
+    public class ListFiltersXMLResponseHandler : IXMLResponseHandler
+    {
+        public event EventHandler filtersUpdated;
+
+        public XmlResponsePacket handle(XmlDocument doc)
+        {
+            XmlResponsePacket packet = new XmlResponsePacket();
+
+            List<Filter> filterList = new List<Filter>();
+            System.Console.WriteLine(doc.OuterXml);
+            XmlNode errNode = doc.SelectSingleNode("//error");
+            if (errNode != null)
+            {
+                packet.ErrorCode = errNode.Name;
+                packet.ErrorDescription = errNode.Value;
+                return packet;
+            }
+
+            XmlNodeList filters = doc.SelectNodes("//filter");
+            foreach(XmlNode filter in filters)
+            {
+                string filterType = "";
+                string sFilter = "";
+                foreach(XmlAttribute attr in filter.Attributes)
+                {
+                    if (attr.Name == "type")
+                        filterType = attr.Value;
+                    else if (attr.Name == "sFilter")
+                        sFilter = attr.Value;
+                }
+
+                string filterName = filter.InnerText;
+
+                filterList.Add(new Filter(filterName, filterType, sFilter));
+            }
+            //currentFilters = filterList;
 
             return packet;
         }
